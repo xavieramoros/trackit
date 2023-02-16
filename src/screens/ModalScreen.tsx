@@ -1,17 +1,16 @@
-import { StyleSheet } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { Platform, StyleSheet } from 'react-native';
 
-import { Text, View } from '../components/Themed';
-import Counter from '../components/Counter';
-import { RootTabScreenProps } from '../types';
+import { Text, View } from '@components/Themed';
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+export default function ModalScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tracking</Text>
+      <Text style={styles.title}>Modal</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Counter //onPlay={} 
-        //onPause={}
-      />
+
+      {/* Use a light status bar on iOS to account for the black space above the modal */}
+      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
     </View>
   );
 }

@@ -7,8 +7,8 @@ import { Text as DefaultText, View as DefaultView } from 'react-native';
 import { Icon as DefaultIcon, Button as DefaultButton, ButtonProps as DefaultButtonProps, IconProps as DefaultIconProps } from 'react-native-elements';
 
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import Colors from '@constants/Colors';
+import useColorScheme from '@hooks/useColorScheme';
 
 export function useThemeColor(
   props: { light?: string; dark?: string },

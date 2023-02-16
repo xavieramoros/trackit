@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { Button, Icon } from '../components/Themed';
+import { Button, Icon } from '@components/Themed';
 
 
 type CounterState = 'initial' | 'playing' | 'paused';
