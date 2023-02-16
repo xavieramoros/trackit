@@ -57,7 +57,7 @@ export const Button = (props: ButtonProps) => {
 }
 
 export const Icon = (props: IconProps) => {
-  const { style, lightColor, darkColor, ...otherProps } = props;
+  const { lightColor, darkColor, ...otherProps } = props;
   const theme = useColorScheme();
   const iconColor = useThemeColor({ light: lightColor, dark: darkColor }, 'iconColor');
 
