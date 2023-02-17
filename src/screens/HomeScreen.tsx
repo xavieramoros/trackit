@@ -23,23 +23,15 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
   const counterState = useSelector(getCounterState)
   const initialTimestamp = useSelector(getCounterCount)
 
-  console.log('initialTimestamp:',initialTimestamp);
-  console.log('initialTimestamp in date:', initialTimestamp ? new Date(initialTimestamp): new Date());
-  //TODO: calculate the time diference
-  console.log('CounterState:',counterState);
-
   const handleStop = ({ state, count}) => {
-    console.log('handleStop:', state, count);
     dispatch(trackingFinished({ state, count: count.valueOf() }));
   }
 
   const handlePlay = ({ state }) => {
-    console.log('handlePlay:', state);
     dispatch(trackingStarted({ state }));
   }
 
   const handlePause = ({ count, state }) => {
-    console.log('handlePause:', state, count);
     dispatch(trackingPaused({ state, count: count.valueOf() }));
   }
 

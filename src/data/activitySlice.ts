@@ -1,12 +1,18 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
+export type ActivityType = {
+  startTimestamp: number,
+  endTimestamp: number,
+  count: number
+}
+
 const activitySlice = createSlice({
   name: 'activity',
   initialState: {
     counterState: 'initial',
     count: 0,
     startTimestamp: null,
-    endedTrackingList: [],
+    activityList: [],
   },
   reducers: {
     trackingFinished (state, { payload }) {
@@ -16,9 +22,9 @@ const activitySlice = createSlice({
         counterState,
         count: null,
         startTimestamp: null,
-        activityList: [...state.endedTrackingList, {
+        activityList: [...state.activityList, {
           startTimestamp: state.startTimestamp,
-          endTimestamp: new Date(),
+          endTimestamp: new Date().valueOf(),
           count
         }]
       }

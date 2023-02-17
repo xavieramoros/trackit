@@ -11,6 +11,7 @@ export default {
     iconColor: '#000',
     buttonBackgroundColor: tintColorLight,
     buttonTitleColor: '#fff',
+    border: '#ccc'
   },
   dark: {
     text: '#fff',
@@ -20,6 +21,7 @@ export default {
     tabIconSelected: tintColorDark,
     iconColor: '#fff',
     buttonBackgroundColor: '#000',
-    buttonTitleColor: '#fff'
+    buttonTitleColor: '#fff',
+    border: '#fff',
   },
 };

@@ -15,7 +15,8 @@ import useColorScheme from '@hooks/useColorScheme';
 import ModalScreen from '@screens/ModalScreen';
 import NotFoundScreen from '@screens/NotFoundScreen';
 import HomeScreen from '@screens/HomeScreen';
-import TabTwoScreen from '@screens/TabTwoScreen';
+import ActivityScreen from '@screens/ActivityScreen';
+import StatisticsScreen from '@screens/StatisticsScreen';
 import SettingsScreen from '@screens/SettingsScreen';
 
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '@customTypes/index';
@@ -87,8 +88,17 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
+        name="Activity"
+        component={ActivityScreen}
+        options={{
+          title: 'Activity',
+          tabBarIcon: ({ color }) => <TabBarIcon name="list" color={color} />,
+        }}
+      />
+
+      <BottomTab.Screen
         name="Statistics"
-        component={TabTwoScreen}
+        component={StatisticsScreen}
         options={{
           title: 'Statistics',
           tabBarIcon: ({ color }) => <TabBarIcon name="bar-chart" color={color} />,
