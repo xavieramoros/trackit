@@ -17,18 +17,20 @@ import {
 } from '@data/selectors'
 
 
-const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
+const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
 
   const dispatch = useDispatch()
-  const initialCount = useSelector(getCounterState)
-  const counterState = useSelector(getCounterCount)
+  const counterState = useSelector(getCounterState)
+  const initialTimestamp = useSelector(getCounterCount)
 
-  console.log('initialCount:',initialCount);
+  console.log('initialTimestamp:',initialTimestamp);
+  console.log('initialTimestamp in date:', initialTimestamp ? new Date(initialTimestamp): new Date());
+  //TODO: calculate the time diference
   console.log('CounterState:',counterState);
 
   const handleStop = ({ state, count}) => {
     console.log('handleStop:', state, count);
-    dispatch(trackingFinished({ state, count }));
+    dispatch(trackingFinished({ state, count: count.valueOf() }));
   }
 
   const handlePlay = ({ state }) => {
@@ -38,14 +40,14 @@ const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
 
   const handlePause = ({ count, state }) => {
     console.log('handlePause:', state, count);
-    dispatch(trackingPaused({ state, count }));
+    dispatch(trackingPaused({ state, count: count.valueOf() }));
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tracking</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Counter onPlay={handlePlay} onPause={handlePause} onStop={handleStop}
+      {/* <Text style={styles.title}>Tracking</Text> */}
+      {/* <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" /> */}
+      <Counter onPlay={handlePlay} onPause={handlePause} onStop={handleStop} initialTimestamp={initialTimestamp}
       />
     </View>
   );
@@ -68,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default  TabOneScreen;
+export default  HomeScreen;
