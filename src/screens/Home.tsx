@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@components/Themed';
-import { RootTabScreenProps } from '@types/index';
+import { RootTabScreenProps } from '@customTypes/index';
 
 export default function HomeScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
   return (

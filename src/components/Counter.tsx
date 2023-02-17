@@ -6,10 +6,15 @@ import { Button, Icon } from '@components/Themed';
 
 type CounterState = 'initial' | 'playing' | 'paused';
 
+type callbackPayload = {
+  state: CounterState,
+  count: Date
+}
+
 type CounterProps = {
-  onPlay?: () => void,
-  onPause?: ()=> void,
-  onStop?: ()=> void,
+  onPlay?: ({ state } : { state: CounterState}) => void,
+  onPause?: ({ count, state} : callbackPayload) => void,
+  onStop?: ({ count, state} : callbackPayload) => void,
 }
 
 const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}}: CounterProps) => {
@@ -23,20 +28,20 @@ const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}}: Co
     }, 1000);
 
     setState('playing');
-    onPlay();
+    onPlay({ state: 'playing'});
   };
 
   const pauseCount = () => {
     clearInterval(intervalRef.current);
     setState('paused');
-    onPause()
+    onPause({ count, state: 'paused' })
   };
 
   const stopCount = () => {
     clearInterval(intervalRef.current);
     setCount(new Date(0));
     setState('initial');
-    onStop();
+    onStop({ count, state: 'initial' });
   };
 
   return (
@@ -54,10 +59,17 @@ const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}}: Co
           />
         )}
         {state === 'playing' && (
-          <Button
-            icon={<Icon name="pause-circle" type="font-awesome" color="white" />}
-            onPress={pauseCount}
-          />
+          <>
+            <Button
+              icon={<Icon name="pause-circle" type="font-awesome" color="white" />}
+              onPress={pauseCount}
+            />
+            <Button
+                containerStyle={styles.marginLeft}
+                icon={<Icon name="stop-circle" type="font-awesome" color="white" />}
+                onPress={stopCount}
+            />
+          </>
         )}
         {state === 'paused' && (
           <>

@@ -2,15 +2,50 @@ import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@components/Themed';
 import Counter from '@components/Counter';
-import { RootTabScreenProps } from '@types/index';
+import { RootTabScreenProps } from '@customTypes/index';
+import { useSelector, useDispatch } from 'react-redux'
 
-export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
+import {
+  trackingFinished,
+  trackingStarted,
+  trackingPaused
+} from '@data/activitySlice'
+
+import {
+  getCounterState,
+  getCounterCount
+} from '@data/selectors'
+
+
+const TabOneScreen = ({ navigation }: RootTabScreenProps<'TabOne'>) => {
+
+  const dispatch = useDispatch()
+  const initialCount = useSelector(getCounterState)
+  const counterState = useSelector(getCounterCount)
+
+  console.log('initialCount:',initialCount);
+  console.log('CounterState:',counterState);
+
+  const handleStop = ({ state, count}) => {
+    console.log('handleStop:', state, count);
+    dispatch(trackingFinished({ state, count }));
+  }
+
+  const handlePlay = ({ state }) => {
+    console.log('handlePlay:', state);
+    dispatch(trackingStarted({ state }));
+  }
+
+  const handlePause = ({ count, state }) => {
+    console.log('handlePause:', state, count);
+    dispatch(trackingPaused({ state, count }));
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tracking</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Counter //onPlay={} 
-        //onPause={}
+      <Counter onPlay={handlePlay} onPause={handlePause} onStop={handleStop}
       />
     </View>
   );
@@ -32,3 +67,5 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
+
+export default  TabOneScreen;
