@@ -16,6 +16,7 @@ module.exports = function(api) {
           "@data": "./src/data",
           "@screens": "./src/screens",
           "@constants": "./src/constants",
+          "@utils": "./src/utils",
         }
       }
     ]

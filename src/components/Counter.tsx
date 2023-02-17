@@ -1,30 +1,33 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-import { Button, Icon } from '@components/Themed';
+import { addSeconds } from 'date-fns'
 
+import { Button, Icon } from '@components/Themed';
+import { convertSecondsToTime } from '@utils/time';
 
 type CounterState = 'initial' | 'playing' | 'paused';
 
 type callbackPayload = {
   state: CounterState,
-  count: Date
+  count: number
 }
 
 type CounterProps = {
   onPlay?: ({ state } : { state: CounterState}) => void,
   onPause?: ({ count, state} : callbackPayload) => void,
   onStop?: ({ count, state} : callbackPayload) => void,
+  initialCount?: number
 }
 
-const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}}: CounterProps) => {
-  const [count, setCount] = useState(new Date(0));
+const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}, initialCount = 0}: CounterProps) => {
+  const [count, setCount] = useState(initialCount);
   const [state, setState] = useState<CounterState>('initial');
   const intervalRef = useRef<NodeJS.Timeout>();
 
   const startCount = () => {
     intervalRef.current = setInterval(() => {
-      setCount((prevCount) => new Date(prevCount.getTime() + 1000));
+      setCount((prevCount: number) => prevCount + 1);
     }, 1000);
 
     setState('playing');
@@ -39,16 +42,17 @@ const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}}: Co
 
   const stopCount = () => {
     clearInterval(intervalRef.current);
-    setCount(new Date(0));
-    setState('initial');
     onStop({ count, state: 'initial' });
+    setCount(0);
+    setState('initial');
   };
 
+  const { hours, minutes, seconds } =  convertSecondsToTime(count)
   return (
     <View style={styles.container}>
       <View style={styles.countContainer}>
         <Text style={styles.countText}>
-          {count.toISOString().substr(11, 8)}
+          { `${hours}:${minutes}:${seconds}`}
         </Text>
       </View>
       <View style={styles.buttonContainer}>
