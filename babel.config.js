@@ -9,6 +9,7 @@ module.exports = function(api) {
         root: ['./'],
         extensions: ['.js', '.ios.js', '.android.js', '.json', '.ts', '.tsx'],
         alias: {
+          "@utils": "./src/utils",
           "@hooks": "./src/hooks/",
           "@customTypes": "./src/customTypes/",
           "@navigation": "./src/navigation",
@@ -16,7 +17,6 @@ module.exports = function(api) {
           "@data": "./src/data",
           "@screens": "./src/screens",
           "@constants": "./src/constants",
-          "@utils": "./src/utils",
         }
       }
     ]

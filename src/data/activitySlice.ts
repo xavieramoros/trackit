@@ -5,30 +5,35 @@ const activitySlice = createSlice({
   initialState: {
     counterState: 'initial',
     count: 0,
+    startTimestamp: null,
     endedTrackingList: [],
   },
   reducers: {
     trackingFinished (state, { payload }) {
-      const { count, state: counterState } = payload;
+      const { count, counterState } = payload;
       return {
         ...state,
         counterState,
         count: null,
-        activityList: [...state.endedTrackingList]
+        startTimestamp: null,
+        activityList: [...state.endedTrackingList, {
+          startTimestamp: state.startTimestamp,
+          endTimestamp: new Date(),
+          count
+        }]
       }
     },
     trackingStarted(state, { payload }) {
-      console.log('trackingStarted: ', payload);
-      const { state: counterState, count } = payload;
+      const { count, counterState } = payload;
       return {
         ...state,
+        startTimestamp: new Date().valueOf(),
         counterState,
         count
       }
     },
     trackingPaused(state, { payload }) {
       const { state: counterState, count } = payload;
-      console.log('trackingPaused: ', payload);
       return {
         ...state,
         counterState,
