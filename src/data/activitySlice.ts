@@ -10,14 +10,15 @@ const activitySlice = createSlice({
   },
   reducers: {
     trackingFinished (state, { payload }) {
-      const { count, counterState } = payload;
+      console.log('trackingFinished:', payload)
+      const { count, state: counterState } = payload;
       return {
         ...state,
         counterState,
         count: null,
         startTimestamp: null,
         activityList: [...state.activityList, {
-          id: state.startTimestamp,
+          id: `${state.startTimestamp}`,
           startTimestamp: state.startTimestamp,
           endTimestamp: new Date().valueOf(),
           count
@@ -25,12 +26,12 @@ const activitySlice = createSlice({
       }
     },
     trackingStarted(state, { payload }) {
-      const { count, counterState } = payload;
+      console.log('trackingStarted:', payload)
+      const { state: counterState } = payload;
       return {
         ...state,
         startTimestamp: new Date().valueOf(),
-        counterState,
-        count
+        counterState
       }
     },
     trackingPaused(state, { payload }) {
@@ -41,8 +42,7 @@ const activitySlice = createSlice({
         count
       }
     },
-    deleteTracking (state, { payload }) {
-      const { id: idToDelete } = payload;
+    deleteTracking (state, { payload: idToDelete }) {
       return {
         ...state,
         activityList: [...state.activityList.filter(({ id }) => id !== idToDelete)]
@@ -51,7 +51,7 @@ const activitySlice = createSlice({
   },
 })
 
-export const { trackingStarted, trackingPaused, trackingFinished } =
+export const { trackingStarted, trackingPaused, trackingFinished, deleteTracking } =
   activitySlice.actions
 
 export default activitySlice.reducer

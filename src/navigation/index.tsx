@@ -4,7 +4,8 @@
  *
  */
 import { FontAwesome } from '@expo/vector-icons';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
@@ -57,7 +58,7 @@ function RootNavigator() {
  * https://reactnavigation.org/docs/bottom-tab-navigator
  */
 
-const BottomTab = createMaterialTopTabNavigator<RootTabParamList>();
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const colorScheme = useColorScheme();
@@ -67,9 +68,8 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
-        tabBarLabelStyle: { fontSize: 10 },
-      }}
-      tabBarPosition="bottom">
+        tabBarLabelStyle: { fontSize: 14 },
+      }}>
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}

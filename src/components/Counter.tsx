@@ -4,6 +4,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { addSeconds } from 'date-fns'
 
 import { Button, Icon } from '@components/Themed';
+import CounterButton from '@components/CounterButton';
 import { convertSecondsToTime } from '@utils/time';
 
 type CounterState = 'initial' | 'playing' | 'paused';
@@ -57,33 +58,33 @@ const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}, ini
       </View>
       <View style={styles.buttonContainer}>
         {state === 'initial' && (
-          <Button
-            icon={<Icon name="play-circle" type="font-awesome" color="white" />}
+          <CounterButton
+            type="play"
             onPress={startCount}
           />
         )}
         {state === 'playing' && (
           <>
-            <Button
-              icon={<Icon name="pause-circle" type="font-awesome" color="white" />}
+            <CounterButton
+              type="pause"
               onPress={pauseCount}
             />
-            <Button
-                containerStyle={styles.marginLeft}
-                icon={<Icon name="stop-circle" type="font-awesome" color="white" />}
-                onPress={stopCount}
+            <CounterButton
+              style={styles.marginLeft}
+              type="stop"
+              onPress={stopCount}
             />
           </>
         )}
         {state === 'paused' && (
           <>
-            <Button
-              icon={<Icon name="play-circle" type="font-awesome" color="white" />}
+            <CounterButton
+              type="play"
               onPress={startCount}
             />
-            <Button
-              containerStyle={styles.marginLeft}
-              icon={<Icon name="stop-circle" type="font-awesome" color="white" />}
+            <CounterButton
+              style={styles.marginLeft}
+              type="stop"
               onPress={stopCount}
             />
           </>
@@ -109,8 +110,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   marginLeft: {
-    marginLeft: 8
-  }
+    marginLeft: 20
+  },
 });
 
 export default Counter;

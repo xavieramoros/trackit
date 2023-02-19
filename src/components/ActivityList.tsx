@@ -9,13 +9,11 @@ import { ActivityType } from '@customTypes/activity';
 
 type ActivityListProps = {
   list: ActivityType[],
-  onDelete: (id: number) => void
+  onDelete: (id: string) => void
 }
 
 const ActivityList = ({ list, onDelete }:ActivityListProps) => {
   const handleRenderItem = ({item}) => <ActivityItem {...item} onDelete={onDelete}/>
-
-  console.log('##### list:',list);
 
   return (
     <View style={styles.listContainer}>
@@ -30,7 +28,7 @@ const ActivityList = ({ list, onDelete }:ActivityListProps) => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    flexDirection: 'column'
+    flex:1,
   }
 });
 

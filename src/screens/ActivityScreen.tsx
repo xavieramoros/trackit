@@ -1,38 +1,37 @@
-import { StyleSheet } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Alert } from 'react-native';
 
-import { Text, View } from '@components/Themed';
 
 import { useSelector, useDispatch } from 'react-redux'
 
 import { getActivityList } from '@data/selectors';
 
+import { deleteTracking } from '@data/activitySlice'
+
+
 import ActivityList from '@components/ActivityList';
 
 const ActivityScreen = () => {
   const activityList = useSelector(getActivityList);
+  const dispatch = useDispatch();
+
+  const handleDelete = (id: string) => {
+    Alert.alert('Delete', 'Do you really want to delete this activity?', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+      {text: 'OK', onPress: () => dispatch(deleteTracking(id))},
+    ]);
+
+  }
   return (
-    <View style={styles.container}>
-      <ActivityList list={activityList}/>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-    </View>
+      <ActivityList list={activityList} onDelete={handleDelete}/>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
 });
 
 export default ActivityScreen;

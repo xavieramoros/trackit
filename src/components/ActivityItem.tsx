@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import { StyleSheet } from 'react-native';
-import { Text, View, Button } from '@components/Themed';
+import { Text, View, Button, Icon } from '@components/Themed';
 import { ActivityType } from '@customTypes/activity';
 import { convertSecondsToFullTime } from '@utils/time';
 
 type ActivityItemProps = ActivityType & {
-  onDelete: (id: number) => void
+  onDelete: (id: string) => void
 }
 
 const ActivityItem = ({ id, startTimestamp, endTimestamp, count, category, onDelete }: ActivityItemProps) => {
@@ -20,6 +20,7 @@ const ActivityItem = ({ id, startTimestamp, endTimestamp, count, category, onDel
       <Text>End: {endTimestamp}</Text>
       <Text>Category: {category}</Text>
       <Text>Total time: {convertSecondsToFullTime(count)}</Text>
+      <Icon onPress={handleDelete} name="delete"/>
     </View>
   );
 };
@@ -27,14 +28,13 @@ const ActivityItem = ({ id, startTimestamp, endTimestamp, count, category, onDel
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
     marginVertical: 4,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderWidth: 1,
     borderColor: '#ccc',
-    borderRadius: 4,
+    borderRadius: 8,
   }
 })
 
