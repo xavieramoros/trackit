@@ -1,30 +1,42 @@
+import React, { useState } from 'react';
+
+
 import { StyleSheet } from 'react-native';
 
 import { Text, View } from '@components/Themed';
+import { Dialog, Chip } from '@rneui/themed';
+
 import Counter from '@components/Counter';
+import CategorySelection from '@components/CategorySelection';
 import { RootTabScreenProps } from '@customTypes/index';
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
   trackingFinished,
   trackingStarted,
-  trackingPaused
+  trackingPaused,
+  addCategoryToLatestActivity
 } from '@data/activitySlice'
 
 import {
   getCounterState,
-  getCounterCount
+  getCounterCount,
+  getCategories
 } from '@data/selectors'
 
+import { CategoryType } from '@customTypes/category';
 
 const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
 
   const dispatch = useDispatch()
   const counterState = useSelector(getCounterState)
+  const categories = useSelector(getCategories)
   const initialTimestamp = useSelector(getCounterCount)
+  const [categoryDialogVisible, setCategoryDialogVisible] = useState(false)
 
   const handleStop = ({ state, count}) => {
     dispatch(trackingFinished({ state, count: count.valueOf() }));
+    setCategoryDialogVisible(true)
   }
 
   const handlePlay = ({ state }) => {
@@ -35,10 +47,31 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
     dispatch(trackingPaused({ state, count: count.valueOf() }));
   }
 
+  const handleCloseDialog = () => {
+    setCategoryDialogVisible(false)
+  }
+
+  const handleCategorySelected = (category: CategoryType) => {
+    console.log('category:', category);
+    dispatch(addCategoryToLatestActivity(category))
+    handleCloseDialog()
+  }
+
   return (
     <View style={styles.container}>
-      <Counter onPlay={handlePlay} onPause={handlePause} onStop={handleStop} initialTimestamp={initialTimestamp}
+      <Counter 
+        onPlay={handlePlay} 
+        onPause={handlePause} 
+        onStop={handleStop} 
+        initialTimestamp={initialTimestamp}
       />
+      <Dialog
+        isVisible={categoryDialogVisible}
+        onBackdropPress={handleCloseDialog}
+      >
+      <Dialog.Title title="Select category"/>
+      <CategorySelection categories={categories} onCategorySelected={handleCategorySelected}/>
+    </Dialog>
     </View>
   );
 }

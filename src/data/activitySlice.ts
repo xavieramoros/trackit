@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { ActivityType } from '@customTypes/activity';
 
 const activitySlice = createSlice({
   name: 'activity',
@@ -7,6 +8,7 @@ const activitySlice = createSlice({
     count: 0,
     startTimestamp: null,
     activityList: [],
+    latestActivity: null
   },
   reducers: {
     trackingFinished (state, { payload }) {
@@ -17,6 +19,7 @@ const activitySlice = createSlice({
         counterState,
         count: null,
         startTimestamp: null,
+        latestActivity: `${state.startTimestamp}`,
         activityList: [...state.activityList, {
           id: `${state.startTimestamp}`,
           startTimestamp: state.startTimestamp,
@@ -48,10 +51,29 @@ const activitySlice = createSlice({
         activityList: [...state.activityList.filter(({ id }) => id !== idToDelete)]
       }
     },
+    addCategoryToLatestActivity( state, { payload: category }){
+      const newList = state.activityList.map( (activity) => {
+        console.log('activity:',activity);
+          if( activity.id === state.latestActivity){
+            return {
+              ...activity,
+              category
+            }
+          }else {
+            return activity
+          }
+        })
+
+        console.log('newLit:', newList)
+      return {
+        ...state,
+        activityList: newList
+      }
+    }
   },
 })
 
-export const { trackingStarted, trackingPaused, trackingFinished, deleteTracking } =
+export const { trackingStarted, trackingPaused, trackingFinished, deleteTracking, addCategoryToLatestActivity } =
   activitySlice.actions
 
 export default activitySlice.reducer

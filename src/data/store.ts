@@ -12,15 +12,22 @@ import {
 } from 'redux-persist'
 
 import activityReducer from './activitySlice'
+import categoryReducer from './categorySlice'
 
 const activityConfig = {
   key: 'activity',
   storage: AsyncStorage
 }
 
+const categoryConfig = {
+  key: 'category',
+  storage: AsyncStorage
+}
+
 export const store = configureStore({
   reducer: {
     activity: persistReducer(activityConfig, activityReducer),
+    category: persistReducer(categoryConfig, categoryReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
