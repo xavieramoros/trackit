@@ -2,14 +2,24 @@ import * as React from 'react';
 
 import { StyleSheet } from 'react-native';
 import { Text, View, Button } from '@components/Themed';
+import { ActivityType } from '@customTypes/activity';
+import { convertSecondsToFullTime } from '@utils/time';
 
-const ActivityItem = ({ startTimestamp, endTimestamp, count, category }) => {
+type ActivityItemProps = ActivityType & {
+  onDelete: (id: number) => void
+}
+
+const ActivityItem = ({ id, startTimestamp, endTimestamp, count, category, onDelete }: ActivityItemProps) => {
+
+  const handleDelete = () => {
+    onDelete(id);
+  }
   return (
     <View style={styles.container}>
-      <Text>Start: {startTimestamp}</Text>
+      <Text>Start time: {startTimestamp}</Text>
       <Text>End: {endTimestamp}</Text>
-      <Text>Category: {startTimestamp}</Text>
-      <Text>Total time: {count}</Text>
+      <Text>Category: {category}</Text>
+      <Text>Total time: {convertSecondsToFullTime(count)}</Text>
     </View>
   );
 };

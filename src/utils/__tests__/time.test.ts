@@ -1,4 +1,4 @@
-import { convertSecondsToTime } from '../time'
+import { convertSecondsToTime, convertSecondsToFullTime } from '../time'
 
 describe('convertSecondsToTime', () => {
   test('converts 3600 seconds to 1 hour, 0 minutes, and 0 seconds', () => {
@@ -31,3 +31,19 @@ describe('convertSecondsToTime', () => {
     expect(convertSecondsToTime(input)).toEqual(expectedOutput);
   });
 });
+
+
+describe('convertSecondsToFullTime', () => {
+  test('converts 3600 seconds into 01:00:00 ', () => {
+    const input = 3600;
+    const expectedOutput = '01:00:00'
+    expect(convertSecondsToFullTime(input)).toEqual(expectedOutput);
+  });
+
+  test('converts 3601 seconds into 01:00:01 ', () => {
+    const input = 3601;
+    const expectedOutput = '01:00:01'
+    expect(convertSecondsToFullTime(input)).toEqual(expectedOutput);
+  })
+
+})

@@ -5,8 +5,15 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Text, View, Button } from '@components/Themed';
 import ActivityItem from '@components/ActivityItem';
 
-const ActivityList = ({ list }) => {
-  const handleRenderItem = ({item}) => <ActivityItem {...item} />
+import { ActivityType } from '@customTypes/activity';
+
+type ActivityListProps = {
+  list: ActivityType[],
+  onDelete: (id: number) => void
+}
+
+const ActivityList = ({ list, onDelete }:ActivityListProps) => {
+  const handleRenderItem = ({item}) => <ActivityItem {...item} onDelete={onDelete}/>
 
   console.log('##### list:',list);
 
@@ -15,7 +22,7 @@ const ActivityList = ({ list }) => {
       <FlatList
         data={list}
         renderItem={handleRenderItem}
-        keyExtractor={item => item.startTimestamp}
+        keyExtractor={item => item.id}
       />
     </View>
   )

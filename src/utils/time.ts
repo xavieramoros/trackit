@@ -20,11 +20,3 @@ export const convertSecondsToFullTime = (inputSeconds: number): string  => {
   const { hours, minutes, seconds } = convertSecondsToTime(inputSeconds);
   return `${hours}:${minutes}:${seconds}`
 }
-
-
-
-export const timestampToTime = (timestamp) => {
-  return {
-
-  }
-}

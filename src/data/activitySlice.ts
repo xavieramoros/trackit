@@ -1,11 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 
-export type ActivityType = {
-  startTimestamp: number,
-  endTimestamp: number,
-  count: number
-}
-
 const activitySlice = createSlice({
   name: 'activity',
   initialState: {
@@ -23,6 +17,7 @@ const activitySlice = createSlice({
         count: null,
         startTimestamp: null,
         activityList: [...state.activityList, {
+          id: state.startTimestamp,
           startTimestamp: state.startTimestamp,
           endTimestamp: new Date().valueOf(),
           count
@@ -45,9 +40,14 @@ const activitySlice = createSlice({
         counterState,
         count
       }
-
     },
-
+    deleteTracking (state, { payload }) {
+      const { id: idToDelete } = payload;
+      return {
+        ...state,
+        activityList: [...state.activityList.filter(({ id }) => id !== idToDelete)]
+      }
+    },
   },
 })
 
