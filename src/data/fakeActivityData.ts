@@ -5,6 +5,7 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const NUMBER_OF_FAKE_ACTIVITIES = 30;
 const AVAILABLE_CATEGORIES = [
   {
     text: 'Meetings',
@@ -45,7 +46,7 @@ const AVAILABLE_CATEGORIES = [
 
 export const generateFakeActivity = () => {
   const activities = [];
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < NUMBER_OF_FAKE_ACTIVITIES; i++) {
     const endTimestamp = Date.now() - getRandomInt(0, TWO_WEEKS); // endTimestamp is a random date in the past two weeks
     const startTimestamp = endTimestamp - getRandomInt(0, TWO_WEEKS); // startTimestamp is also a random date in the past two weeks
     const id = String(endTimestamp); // id is the same as endTimestamp

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { StyleSheet, Pressable } from 'react-native';
-import { Text, View, Icon } from '@components/Themed';
+import { Pressable } from 'react-native';
+import { Text, Icon } from '@components/Themed';
 
 import { CategoryType } from '@customTypes/category'
 
@@ -10,7 +10,7 @@ type CategoryItemProps = CategoryType & {
 }
 
 const CategoryItem = ({ icon, type, color, text, onPress = ()=>{}}: CategoryItemProps) => {
-  
+
   const handlePress = () => {
     onPress({ icon, type, color, text })
   }

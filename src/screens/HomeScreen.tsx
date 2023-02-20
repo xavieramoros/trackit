@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux'
+import Toast from 'react-native-toast-message';
 
 import { View } from '@components/Themed';
 import { Dialog } from '@rneui/themed';
@@ -53,7 +54,8 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
       type: 'success',
       text1: 'Success!',
       text2: 'Your activity has been saved!',
-      position: 'bottom'
+      position: 'bottom',
+      bottomOffset: 100
     });
   }
 

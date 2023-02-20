@@ -10,7 +10,7 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
-import Toast from 'react-native-toast-message';
+import Toast, { BaseToast } from 'react-native-toast-message';
 
 import Colors from '@constants/Colors';
 import useColorScheme from '@hooks/useColorScheme';
@@ -25,6 +25,23 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '@custo
 import LinkingConfiguration from './LinkingConfiguration';
 import { Icon } from '@components/Themed';
 
+const toastConfig = {
+  success: (props) => (
+    <BaseToast
+      {...props}
+      style={{ borderLeftColor: 'green' }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
+      text1Style={{
+        fontSize: 20,
+      }}
+      text2Style={{
+        fontSize: 18,
+      }}
+    />
+  ),
+
+}
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <>
@@ -33,7 +50,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
-    <Toast/>
+    <Toast config={toastConfig} />
     </>
   );
 }
