@@ -29,6 +29,7 @@ const CounterButton = ({ type, onPress, style = {} }: CounterButtonProps) => {
   return (
     <View style={[styles.container, style]}>
       <Button
+        testID={config[type].icon}
         type="clear"
         buttonStyle={{
           backgroundColor: 'transparent',

@@ -60,7 +60,6 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
   }
 
   const handleCategorySelected = (category: CategoryType) => {
-    console.log('category:', category);
     dispatch(addCategoryToLatestActivity(category))
     handleCloseDialog()
     showToast()
@@ -69,9 +68,9 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
   return (
     <View style={styles.container}>
       <Counter 
-        onPlay={handlePlay} 
-        onPause={handlePause} 
-        onStop={handleStop} 
+        onPlay={handlePlay}
+        onPause={handlePause}
+        onStop={handleStop}
         initialTimestamp={startTimestamp}
         initialState={counterState}
       />
