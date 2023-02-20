@@ -18,7 +18,7 @@ import {
 
 import {
   getCounterState,
-  getCounterCount,
+  getStartTimestamp,
   getCategories
 } from '@data/selectors'
 
@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
   const dispatch = useDispatch()
   const counterState = useSelector(getCounterState)
   const categories = useSelector(getCategories)
-  const initialTimestamp = useSelector(getCounterCount)
+  const startTimestamp = useSelector(getStartTimestamp)
   const [categoryDialogVisible, setCategoryDialogVisible] = useState(false)
 
   const handleStop = ({ state, count}) => {
@@ -72,11 +72,11 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
         onPlay={handlePlay} 
         onPause={handlePause} 
         onStop={handleStop} 
-        initialTimestamp={initialTimestamp}
+        initialTimestamp={startTimestamp}
+        initialState={counterState}
       />
       <Dialog
         isVisible={categoryDialogVisible}
-        //onBackdropPress={handleCloseDialog}
       >
         <Dialog.Title title="Select category"/>
         <CategorySelection categories={categories} onCategorySelected={handleCategorySelected}/>

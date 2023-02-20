@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { differenceInSeconds } from 'date-fns'
 
-import { addSeconds } from 'date-fns'
-
-import { Button, Icon } from '@components/Themed';
 import CounterButton from '@components/CounterButton';
 import { convertSecondsToTime } from '@utils/time';
 
@@ -18,12 +16,26 @@ type CounterProps = {
   onPlay?: ({ state } : { state: CounterState}) => void,
   onPause?: ({ count, state} : callbackPayload) => void,
   onStop?: ({ count, state} : callbackPayload) => void,
-  initialCount?: number
+  initialTimestamp?: number,
+  initialState?: CounterState
 }
 
-const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}, initialCount = 0}: CounterProps) => {
-  const [count, setCount] = useState(initialCount);
-  const [state, setState] = useState<CounterState>('initial');
+const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}, initialTimestamp, initialState = 'initial'}: CounterProps) => {
+
+  const [count, setCount] = useState<number>(0);
+
+  useEffect(()=> {
+    if(initialTimestamp){
+      const initialCount = differenceInSeconds(new Date(), new Date(initialTimestamp));
+      setCount(initialCount);
+
+      if(initialState === 'playing'){
+        startCount()
+      }
+    }
+  }, [])
+
+  const [state, setState] = useState<CounterState>(initialState);
   const intervalRef = useRef<NodeJS.Timeout>();
 
   const startCount = () => {
@@ -49,6 +61,7 @@ const Counter = ({ onStop = () => {}, onPlay = () => {}, onPause = () => {}, ini
   };
 
   const { hours, minutes, seconds } =  convertSecondsToTime(count)
+
   return (
     <View style={styles.container}>
       <View style={styles.countContainer}>
