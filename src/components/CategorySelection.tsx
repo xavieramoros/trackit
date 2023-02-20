@@ -20,13 +20,15 @@ const CategorySelection = ({ categories, onCategorySelected }: CategorySelection
   return (
     <View style={styles.container}>
         { categories.map(({ icon, color, text, type }) => (
-          <CategoryItem
-            icon={icon}
-            color={color}
-            text={text}
-            type={type}
-            onPress={onCategorySelected}
-          />
+          <View key={text} style={styles.categoryWrapper}>
+            <CategoryItem
+              icon={icon}
+              color={color}
+              text={text}
+              type={type}
+              onPress={onCategorySelected}
+            />
+          </View>
         ))
       }
       <Button
@@ -49,9 +51,13 @@ const CategorySelection = ({ categories, onCategorySelected }: CategorySelection
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     alignItems: 'center',
-    justifyContent: 'center'
   },
+  categoryWrapper: {
+    marginLeft: 4
+  }
 })
 
 export default CategorySelection;

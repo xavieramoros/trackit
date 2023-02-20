@@ -1,5 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { ActivityType } from '@customTypes/activity';
+import { createSlice } from '@reduxjs/toolkit'
+import { generateFakeActivity } from '@data/fakeActivityData';
+import { ActivityType } from "@customTypes/activity";
 
 const activitySlice = createSlice({
   name: 'activity',
@@ -12,7 +13,6 @@ const activitySlice = createSlice({
   },
   reducers: {
     trackingFinished (state, { payload }) {
-      console.log('trackingFinished:', payload)
       const { count, state: counterState } = payload;
       return {
         ...state,
@@ -29,7 +29,6 @@ const activitySlice = createSlice({
       }
     },
     trackingStarted(state, { payload }) {
-      console.log('trackingStarted:', payload)
       const { state: counterState } = payload;
       return {
         ...state,
@@ -52,8 +51,9 @@ const activitySlice = createSlice({
       }
     },
     addCategoryToLatestActivity( state, { payload: category }){
-      const newList = state.activityList.map( (activity) => {
-        console.log('activity:',activity);
+      return {
+        ...state,
+        activityList: state.activityList.map( (activity): ActivityType => {
           if( activity.id === state.latestActivity){
             return {
               ...activity,
@@ -63,17 +63,18 @@ const activitySlice = createSlice({
             return activity
           }
         })
-
-        console.log('newLit:', newList)
+      }
+    },
+    addFakeActivityData(state){
       return {
         ...state,
-        activityList: newList
+        activityList: generateFakeActivity()
       }
     }
   },
 })
 
-export const { trackingStarted, trackingPaused, trackingFinished, deleteTracking, addCategoryToLatestActivity } =
+export const { trackingStarted, trackingPaused, trackingFinished, deleteTracking, addCategoryToLatestActivity, addFakeActivityData } =
   activitySlice.actions
 
 export default activitySlice.reducer

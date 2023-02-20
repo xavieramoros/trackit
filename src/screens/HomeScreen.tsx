@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-
-
 import { StyleSheet } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux'
 
-import { Text, View } from '@components/Themed';
-import { Dialog, Chip } from '@rneui/themed';
-
+import { View } from '@components/Themed';
+import { Dialog } from '@rneui/themed';
 import Counter from '@components/Counter';
 import CategorySelection from '@components/CategorySelection';
 import { RootTabScreenProps } from '@customTypes/index';
-import { useSelector, useDispatch } from 'react-redux'
 
 import {
   trackingFinished,
@@ -51,10 +48,20 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
     setCategoryDialogVisible(false)
   }
 
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Success!',
+      text2: 'Your activity has been saved!',
+      position: 'bottom'
+    });
+  }
+
   const handleCategorySelected = (category: CategoryType) => {
     console.log('category:', category);
     dispatch(addCategoryToLatestActivity(category))
     handleCloseDialog()
+    showToast()
   }
 
   return (
@@ -67,11 +74,11 @@ const HomeScreen = ({ navigation }: RootTabScreenProps<'Home'>) => {
       />
       <Dialog
         isVisible={categoryDialogVisible}
-        onBackdropPress={handleCloseDialog}
+        //onBackdropPress={handleCloseDialog}
       >
-      <Dialog.Title title="Select category"/>
-      <CategorySelection categories={categories} onCategorySelected={handleCategorySelected}/>
-    </Dialog>
+        <Dialog.Title title="Select category"/>
+        <CategorySelection categories={categories} onCategorySelected={handleCategorySelected}/>
+      </Dialog>
     </View>
   );
 }

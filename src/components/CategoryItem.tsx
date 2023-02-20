@@ -27,7 +27,7 @@ const CategoryItem = ({ icon, type, color, text, onPress = ()=>{}}: CategoryItem
         paddingHorizontal: 8,
         borderColor: color,
         borderWidth: 2,
-        maxWidth: 150
+        maxWidth: 130
       }
     }>
     <Icon
